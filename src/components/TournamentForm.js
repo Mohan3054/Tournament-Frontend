@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useHistory } from 'react-router-dom';
 
 const TournamentForm = () => {
-  const history = useHistory();
+//   const history = useHistory();
   const { id } = useParams();
   const [tournament, setTournament] = useState({
     name: '',
@@ -13,7 +13,7 @@ const TournamentForm = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/api/tournaments/${id}`)
+      axios.get(`http://localhost:8000/api/tournaments/${id}`)
         .then(response => setTournament(response.data))
         .catch(error => console.error(error));
     }
@@ -22,11 +22,11 @@ const TournamentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      await axios.patch(`/api/tournaments/${id}`, tournament);
+      await axios.patch(`http://localhost:8000/api/tournaments/${id}`, tournament);
     } else {
-      await axios.post('/api/tournaments/create', tournament);
+      await axios.post('http://localhost:8000/api/tournaments/create', tournament);
     }
-    history.push('/tournaments');
+    // history.push('/tournaments');
   };
 
   return (

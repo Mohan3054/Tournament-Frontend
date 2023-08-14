@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useHistory } from 'react-router-dom';
 
 const ParticipantForm = () => {
-  const history = useHistory();
+  // const history = useHistory();
   const { id } = useParams();
   const [participant, setParticipant] = useState({
     name: '',
@@ -11,7 +11,7 @@ const ParticipantForm = () => {
 
   useEffect(() => {
     if (id) {
-      axios.get(`/api/participants/${id}`)
+      axios.get(`http://localhost:8000/api/participants/${id}`)
         .then(response => setParticipant(response.data))
         .catch(error => console.error(error));
     }
@@ -20,18 +20,18 @@ const ParticipantForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (id) {
-      await axios.patch(`/api/participants/${id}`, participant);
+      await axios.patch(`http://localhost:8000/api/participants/${id}`, participant);
     } else {
-      await axios.post('/api/participants/create', participant);
+      await axios.post('http://localhost:8000/api/participants/create', participant);
     }
-    history.push('/participants');
+    // history.push('/participants');
   };
 
   return (
     <div>
       <h1>{id ? 'Edit Participant' : 'Create Participant'}</h1>
       <form onSubmit={handleSubmit}>
-        <label>Name:</label>
+        <label className=''>Name:</label>
         <input type="text" value={participant.name} onChange={(e) => setParticipant({ ...participant, name: e.target.value })} />
         <button type="submit">Save</button>
       </form>
